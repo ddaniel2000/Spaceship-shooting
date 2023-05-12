@@ -27,23 +27,23 @@ public class FighterSurfacesControl : MonoBehaviour
 	    {
 	        MRx = Mathf.Clamp(MRx + Input.GetAxis("Mouse Y")*0.05f, -1f, 1f);
 	        MRz = Mathf.Clamp(MRz - Input.GetAxis("Mouse X")*0.05f, -1f, 1f);
-	        MRy = Mathf.Clamp(MRy + Input.GetAxis("Yaw")*0.05f, -1f, 1f);
+	        //MRy = Mathf.Clamp(MRy + Input.GetAxis("Yaw")*0.05f, -1f, 1f);
 	    }
 	    else
 	    {
             MRx = Mathf.Clamp(MRx + Input.GetAxis("Vertical") * 0.05f, -1f, 1f);
             MRz = Mathf.Clamp(MRz - Input.GetAxis("Horizontal") * 0.05f, -1f, 1f);
-            MRy = Mathf.Clamp(MRy + Input.GetAxis("Yaw") * 0.05f, -1f, 1f);   
+            //MRy = Mathf.Clamp(MRy + Input.GetAxis("Yaw") * 0.05f, -1f, 1f);   
 	    }
 	    if (!turnFlap)
         {
-            if (Input.GetKeyDown("f")) { turnFlap = true; f = false; }
+            if (Input.GetKeyDown(KeyCode.F)) { turnFlap = true; f = false; }
         }
         else
         {
             if (turnFlap)
             {
-                if (Input.GetKeyDown("f")) { turnFlap = false; f = true; }
+                if (Input.GetKeyDown(KeyCode.F)) { turnFlap = false; f = true; }
             }
         }
         rightElevator.transform.localRotation = Quaternion.Euler(new Vector3((MRz + MRx) * maxAngle, rightElevatorSetAngle, 0));
