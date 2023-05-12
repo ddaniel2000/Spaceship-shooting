@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ef3bf5bd188d04a9dd9f0feb937108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tex: {fileID: 0}
+  tex: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   rightElevator: {fileID: 4616544219842838}
   leftElevator: {fileID: 4612887498559300}
   rightFlap: {fileID: 4040824410442684}
@@ -368,8 +368,7 @@ MonoBehaviour:
   rudderMaxAngle: 30
   rightElevatorSetAngle: 0
   leftElevatorSetAngle: 0
-  useMouse: 0
-  turnFlap: 0
+  useMouse: 1
   turnSpeed: 2
 --- !u!1 &1336972379380208
 GameObject:
@@ -706,6 +705,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4427129057575456}
+  - component: {fileID: 79259622}
   m_Layer: 0
   m_Name: Fighter
   m_TagString: Untagged
@@ -729,6 +729,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &79259622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940402267846110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d49538fdf2d2334bae371e56fbd9167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isMoving: 0
+  _controlSpeed: 10
+  _xRange: 9.5
+  _yRange: 9
+  _yRangeDownOffset: 5
 --- !u!1 &1943405258541252
 GameObject:
   m_ObjectHideFlags: 0

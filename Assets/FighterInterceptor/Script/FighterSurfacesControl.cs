@@ -8,61 +8,44 @@ public class FighterSurfacesControl : MonoBehaviour
     public Transform rightElevator, leftElevator;
     public Transform rightFlap, leftFlap;
     public Transform rightRudder, leftRudder;
-    public float MRx, MRy, MRz;
+    private float MRx, MRy, MRz;
     public float maxAngle, flapMaxAngle, rudderMaxAngle;
     public float rightElevatorSetAngle, leftElevatorSetAngle;
     public bool useMouse;
-    public bool turnFlap;
-    private bool f;
     public float turnSpeed;
-    private float angleX;
-	// Use this for initialization
-	void Start () {
-		
-	}
+
+    private PlayerShipMovement _playerMovement;
 	
-	// Update is called once per frame
-	void Update () {
-	    if (useMouse)
-	    {
-	        MRx = Mathf.Clamp(MRx + Input.GetAxis("Mouse Y")*0.05f, -1f, 1f);
-	        MRz = Mathf.Clamp(MRz - Input.GetAxis("Mouse X")*0.05f, -1f, 1f);
-	        //MRy = Mathf.Clamp(MRy + Input.GetAxis("Yaw")*0.05f, -1f, 1f);
-	    }
-	    else
-	    {
-            MRx = Mathf.Clamp(MRx + Input.GetAxis("Vertical") * 0.05f, -1f, 1f);
-            MRz = Mathf.Clamp(MRz - Input.GetAxis("Horizontal") * 0.05f, -1f, 1f);
-            //MRy = Mathf.Clamp(MRy + Input.GetAxis("Yaw") * 0.05f, -1f, 1f);   
-	    }
-	    if (!turnFlap)
-        {
-            if (Input.GetKeyDown(KeyCode.F)) { turnFlap = true; f = false; }
-        }
-        else
-        {
-            if (turnFlap)
-            {
-                if (Input.GetKeyDown(KeyCode.F)) { turnFlap = false; f = true; }
-            }
-        }
+	void Start () {
+        Cursor.visible = false;
+        _playerMovement = GetComponentInParent<PlayerShipMovement>();
+        
+    }
+
+    void Update () {
+        //if (useMouse)
+        //{
+        //    MRx = Mathf.Clamp(MRx + Input.GetAxis("Mouse Y")*0.05f, -1f, 1f);
+        //    MRz = Mathf.Clamp(MRz - Input.GetAxis("Mouse X")*0.05f, -1f, 1f);
+
+        //}
+        //else
+        //{
+        //       MRx = Mathf.Clamp(MRx + Input.GetAxis("Vertical") * 0.05f, -1f, 1f);
+        //       MRz = Mathf.Clamp(MRz - Input.GetAxis("Horizontal") * 0.05f, -1f, 1f);
+
+        //}
+        MRx = transform.localPosition.x + _playerMovement.yThrow;
+        MRz = transform.localPosition.y - _playerMovement.xThrow;
+        MRy = transform.localPosition.y - _playerMovement.xThrow;
+
         rightElevator.transform.localRotation = Quaternion.Euler(new Vector3((MRz + MRx) * maxAngle, rightElevatorSetAngle, 0));
-        leftElevator.transform.localRotation = Quaternion.Euler(new Vector3((-MRz + MRx) * maxAngle,
-            leftElevatorSetAngle, 0));
+        leftElevator.transform.localRotation = Quaternion.Euler(new Vector3((-MRz + MRx) * maxAngle,leftElevatorSetAngle, 0));
+        rightFlap.transform.localRotation = Quaternion.Euler(new Vector3((MRz + MRx) * maxAngle,leftElevatorSetAngle, 0));
+        leftFlap.transform.localRotation = Quaternion.Euler(new Vector3((-MRz + MRx) * maxAngle,leftElevatorSetAngle, 0));
         TransAng(rightRudder, 16, MRy * rudderMaxAngle, 107);
         TransAng(leftRudder, -16, MRy * rudderMaxAngle, 73);
-	    if (turnFlap)
-	    {
-            angleX = Mathf.Lerp(angleX, 1, turnSpeed * Time.deltaTime);
-            TransAng(rightFlap, 6, angleX * flapMaxAngle, 5);
-            TransAng(leftFlap, -6, angleX * flapMaxAngle, -5);
-	    }
-	    else
-	    {
-            angleX = Mathf.Lerp(angleX, 0, turnSpeed * Time.deltaTime);
-            TransAng(rightFlap, 6, angleX * flapMaxAngle, 5);
-            TransAng(leftFlap, -6, angleX * flapMaxAngle, -5);
-	    }
+
 	}
     float c1, c2, c3, s1, s2, s3;
     float w, x, y, z;
@@ -84,6 +67,6 @@ public class FighterSurfacesControl : MonoBehaviour
     }
     void OnGUI()
     {
-        GUI.DrawTexture(new Rect(Screen.width * 0.5f * (-MRz + 1f) - 8, Screen.height * 0.5f * (-MRx + 1f) - 8, 16f, 16f), tex);
+        GUI.DrawTexture(new Rect(Screen.width * 0.5f * (-MRz/2 + 1f) - 8, Screen.height * 0.5f * (-MRx/2 + 1f) - 8, 32f, 32f), tex);
     }
 }
