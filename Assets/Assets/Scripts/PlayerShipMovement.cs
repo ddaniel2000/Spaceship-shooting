@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class PlayerShipMovement : MonoBehaviour
 {
-    [SerializeField]private bool _isMoving = true;
+    [Header("General Setup Settings")]
+    [Tooltip("How fast the ship moves up and down based on player input")]
     [SerializeField]private float _controlSpeed = 20f;
+    [Tooltip("How far player moves horyzontaly")][SerializeField] private float _xRange = 9.5f;
+    [Tooltip("How far player moves verticaly")] [SerializeField] private float _yRange = 9f;
 
-    [SerializeField] private float _xRange = 9.5f;
-    [SerializeField] private float _yRange = 9f;
+    [Header("Laser gun array")]
+    [Tooltip("Add all player projectile's here")]
+    [SerializeField] private ParticleSystem[] _shootingParticles;
+
+    [Header("Screen Position based tuning")]
     [SerializeField] private float _yRangeDownOffset = 5f;
-
     [SerializeField] private float _positionPitchFactor = -2f;
-    [SerializeField] private float _controlPitchFactor = -10f;
     [SerializeField] private float _positionYawFactor = 2f;
 
-
+    [Header("Player input based tuning")]
+    [SerializeField] private float _controlPitchFactor = -10f;
     [SerializeField] private float _controlRollFactor = -20f;
 
+    private bool _isMoving = true;
+    
     public float xThrow, yThrow;
 
     void Start()
@@ -31,6 +38,7 @@ public class PlayerShipMovement : MonoBehaviour
 
         ProcessMovement();
         ProcessRotation();
+        ProcessFireing();
  
     }
 
@@ -75,4 +83,28 @@ public class PlayerShipMovement : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
     }
+
+    private void ProcessFireing()
+    {
+
+        if(Input.GetMouseButton(0))
+        {
+            SetLasersActive(true);
+
+        }
+        else
+        {
+            SetLasersActive(false);
+        }
+    }
+
+    private void SetLasersActive(bool isActive)
+    {
+        foreach (ParticleSystem particle in _shootingParticles)
+        {
+            var emissionModule = particle.emission;
+            emissionModule.enabled = isActive;
+        }
+    }
+
 }
