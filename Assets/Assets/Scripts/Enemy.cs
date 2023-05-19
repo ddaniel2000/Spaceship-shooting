@@ -5,7 +5,6 @@ using System;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private GameObject[] _deathVFX;
-    [SerializeField] Transform _parent;
 
     [SerializeField] private int _score;
     private int hitPoint;
@@ -40,7 +39,6 @@ public class Enemy : MonoBehaviour
     {
 
         DeathSequence();
-        Debug.Log("KILL ENEMY");
         Destroy(gameObject, 0);
     }
 
@@ -48,8 +46,8 @@ public class Enemy : MonoBehaviour
     {
         foreach (GameObject particle in _deathVFX)
         {
-            Debug.Log("INSTANTIATE FX");
-            Instantiate(particle, transform.position, Quaternion.identity, _parent);
+  
+            Instantiate(particle, transform.position, Quaternion.identity);
         }
         
     }
